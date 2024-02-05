@@ -31,27 +31,39 @@ const NewAppointment = () => {
       return;
     }
 
-    const newAppointment = {
-      ...formValues,
-      key: appointments?.length ? appointments.length + 1 : 1,
-      Appointment_id: appointments?.length ? appointments.length + 1 : 1,
-      User_email: getItem(Token).email,
-      Is_delete: false,
-      Created_at: new Date(),
-    };
 
+    
     if (location.search) {
+        const newAppointment = {
+          ...formValues,
+          key: location.state.key,
+          Appointment_id: location.state.Appointment_id,
+          User_email: getItem(Token).email,
+          Is_delete: false,
+          Created_at: new Date(),
+        };
       const newList =
         appointments.filter(
-          (ele, i) => ele.Appointment_id !== location.state.Appointment_id
+          (ele, i) => {console.log(ele.Appointment_id,location.state.Appointment_id)
+             return ele.Appointment_id !== location.state.Appointment_id}
         ) || [];
+        console.log(newList, newAppointment);
       setItem(Appointment, [...newList, newAppointment]);
+
     } else {
+        
+        const newAppointment = {
+            ...formValues,
+            key: appointments?.length ? appointments[appointments.length-1].Appointment_id +1 : 1,
+            Appointment_id: appointments?.length ? appointments[appointments.length-1].Appointment_id +1 : 1,
+            User_email: getItem(Token).email,
+            Is_delete: false,
+            Created_at: new Date(),
+          };
       const sameAppointment = appointments?.find(
         (ele, i) => ele.Appointment_date === formValues.Appointment_date
       );
       if (sameAppointment) {
-        console.log(sameAppointment);
         alert(
           `but chief we have another appointment on this date at ${sameAppointment.Appointment_time}`
         );

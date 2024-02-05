@@ -9,11 +9,17 @@ const Appointments = () => {
 
   const handleDelete=(record)=>{
     const updatedData = data.filter((ele,i)=>ele.Appointment_id !== record.Appointment_id);
-    setItem(Appointment,updatedData )
+    console.log({updatedData,record,data})
+    setItem(Appointment,updatedData)
     setdata(updatedData)
   }
   
   const columns = [
+    {
+      title: "ID",
+      dataIndex: "Appointment_id",
+      sorter: (a, b) => a.Hospital_name.localeCompare(b.Hospital_name),
+    },
     {
       title: "Hospital Name",
       dataIndex: "Hospital_name",
@@ -48,7 +54,7 @@ const Appointments = () => {
 
   
   useState(()=>{
-    setdata(getItem(Appointment))
+    setdata(getItem(Appointment)?.sort((a,b)=>a.Appointment_id-b.Appointment_id))
   },[])
 
   const handleLogout=()=>{
