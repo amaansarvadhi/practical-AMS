@@ -7,7 +7,46 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+
+.container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login_inside{
+  display: flex;
+  justify-content: center;
+  border: 2px solid #00000033;
+  padding: 2rem;
+  align-items: center;
+  background-color: aliceblue;
+}
+
+.newAppointment_inside{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 2px solid #00000033;
+  background-color: aliceblue;
+  padding: 2rem;
+  gap:1rem;
+}
+
+.appointments_container{
+  width: 100vw;
+}
+
+.appointments_container h1{
+  text-align: center;
+}
+
+.appointment_form{
+  width: 100%;
+}
+
+.appointment_form label{
+  display: block;
+  margin-top: 1rem;
 }

@@ -1,23 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect } from "react";
+import {
+  Department,
+  Hospital,
+  Users,
+  setItem,
+} from "./Services/LocalStorageManager";
+import { HospitalConstants } from "./Constants/hospitalConstants";
+import { DepartmentConstant } from "./Constants/departmentConstants";
+import { UsersConstants } from "./Constants/userConstants";
+import Login from "./Pages/Login";
+import { Route, Routes } from "react-router-dom";
+import PublicRoutes from "./PublicRoutes";
+import ProtectedRoutes from "./ProtectedRoutes";
+import Appointments from "./Pages/Appointments";
+import PageNotFound from "./PageNotFound";
+import NewAppointment from "./Pages/Appointments/NewAppointment";
 
 function App() {
+  const dataFiller = () => {
+    setItem(Hospital, HospitalConstants);
+    setItem(Department, DepartmentConstant);
+    setItem(Users, UsersConstants);
+  };
+
+  useEffect(() => {
+    dataFiller();
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routes>
+        <Route element={<PublicRoutes />}>
+          <Route path="/login" element={<Login />} />
+        </Route>
+        <Route element={<ProtectedRoutes />}>
+          <Route path="/" element={<Appointments />} />
+          <Route path="/newAppointment" element={<NewAppointment />} />
+        </Route>
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
     </div>
   );
 }
